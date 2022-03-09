@@ -1,8 +1,15 @@
 <%= form_with model: @post, local: true do |f|%>
 <%= f.text_field :content %>
+<%= f.file_field :images, multiple: true%>
 <%= f.submit%>
 <%end%>
 
 <% @posts.each do |post| %>
-    <p><%= post.content%> ss<%= link_to "削除", "posts/#{post.id}", method: :delete %><p/>
+    <p><%= post.content%>
+        <% if post.images.attached? %>
+            <% post.images.each do |image| %>
+                <%= image_tag image%>
+            <%end%>
+        <%end%>
+        <%= link_to "削除", "posts/#{post.id}", method: :delete %><p/>
 <% end %>
